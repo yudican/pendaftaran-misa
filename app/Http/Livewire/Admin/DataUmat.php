@@ -59,7 +59,7 @@ class DataUmat extends Component
             'username'  => strtolower($namadepan) . $password,
             'password'  => Hash::make($password),
         ]);
-        $data = ['user_id' => $user->id];
+        $data['user_id'] = $user->id;
         $team = Team::find(1);
         $team->users()->attach($user, ['role' => 'anggota']);
 
