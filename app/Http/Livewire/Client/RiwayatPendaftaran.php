@@ -10,10 +10,17 @@ class RiwayatPendaftaran extends Component
     public $pendaftaran_id;
     public function render()
     {
+        if (auth()->user()->dataUmat) {
+            return view('livewire.client.riwayat-pendaftaran', [
+                'pendaftarans' => Pendaftaran::whereHas('jadwal', function ($query) {
+                    return $query->whereDate('tanggal', '>=', date('Y-m-d'));
+                })->where(['parent_id'  => auth()->user()->dataUmat->id])->get()
+            ])->layout('layouts.user');
+        }
         return view('livewire.client.riwayat-pendaftaran', [
             'pendaftarans' => Pendaftaran::whereHas('jadwal', function ($query) {
                 return $query->whereDate('tanggal', '>=', date('Y-m-d'));
-            })->where(['parent_id'  => auth()->user()->dataUmat->id])->get()
+            })->where(['parent_id'  => auth()->user()->id])->get()
         ])->layout('layouts.user');
     }
 

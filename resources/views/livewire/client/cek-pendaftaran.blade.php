@@ -29,14 +29,14 @@
                         <tr>
                             <td>Nama</td>
                             <td>Lingkungan</td>
-                            <td>Barcode</td>
+                            {{-- <td>Barcode</td> --}}
                         </tr>
                         @foreach ($pendaftarans as $pendaftaran)
                         <tr>
                             <td>{{$pendaftaran->user->name}}</td>
                             <td class="p-2">{{$pendaftaran->dataUmat->linkungan}}</td>
-                            <td class="m-2">{!!QrCode::size(200)->generate($pendaftaran->id)!!}
-                            </td>
+                            {{-- <td class="m-2">{!!QrCode::size(200)->generate($pendaftaran->id)!!}
+                            </td> --}}
                         </tr>
                         @endforeach
                     </table>
