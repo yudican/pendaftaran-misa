@@ -32,7 +32,6 @@ class User extends Authenticatable
         'name',
         'username',
         'password',
-        'parent_id',
     ];
 
     /**
@@ -82,7 +81,7 @@ class User extends Authenticatable
      */
     public function dataUmat()
     {
-        return $this->hasOne(DataUmat::class);
+        return $this->hasOne(DataUmat::class, 'user_id', 'id');
     }
 
     /**

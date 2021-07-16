@@ -39,6 +39,11 @@
                     </div>
                     <div class="modal-body">
                         <x-text-field type="text" name="status_kesehatan" label="Status kesehatan" />
+                        <x-select name="status" label="Status Daftar">
+                            <option value="">Pilih Status Daftar</option>
+                            <option value="1">Boleh Daftar</option>
+                            <option value="0">Tidak Boleh Daftar</option>
+                        </x-select>
                     </div>
                     <div class="modal-footer">
 

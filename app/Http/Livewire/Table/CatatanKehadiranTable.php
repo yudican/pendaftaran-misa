@@ -4,29 +4,34 @@ namespace App\Http\Livewire\Table;
 
 use App\Models\HideableColumn;
 use App\Models\DataAbsen;
+use App\Models\Pendaftaran;
+use App\Models\User;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
-class DataAbsenTable extends LivewireDatatable
+class CatatanKehadiranTable extends LivewireDatatable
 {
     protected $listeners = ['refreshTable', 'setFilter'];
     public $hideable = 'select';
-    public $table_name = 'absen_umat';
+    public $table_name = 'catatan_kehadiran';
     public $filters = [];
     public $hide = [];
 
 
     public function builder()
     {
-        $jadwal_id = count($this->filters) > 0 ? $this->filters['jadwal_id'] : null;
-        if ($jadwal_id) {
-            return DataAbsen::with('pendaftaran', 'user')->whereHas('pendaftaran', function ($query) use ($jadwal_id) {
-                return $query->where('jadwal_id', $jadwal_id);
-            });
-        } else {
-            return DataAbsen::with('pendaftaran', 'user');
-        }
+        // $absen =  DataAbsen::whereDoesntHave('pendaftaran', function ($query) {
+        //     return $query->where('status', '1');
+        // });
+        // dd($absen->get());
+        // $absen = Pendaftaran::with(['user', 'user.dataUmat', 'jadwal'])->whereDoesntHave('dataAbsens');
+        // dd($absen->get());
+        return Pendaftaran::whereHas('jadwal', function ($query) {
+            return $query->whereDate('tanggal', '<=', date('Y-m-d'));
+        })->whereDoesntHave('dataAbsens', function ($q) {
+            return $q->has('pendaftaran', '>=', 3);
+        })->where('status', '0');
     }
 
     public function columns()
@@ -34,9 +39,15 @@ class DataAbsenTable extends LivewireDatatable
         $this->hide = HideableColumn::where(['table_name' => $this->table_name, 'user_id' => auth()->user()->id])->pluck('column_name')->toArray();
         return [
             Column::name('user.name')->label('Nama')->searchable(),
-            Column::name('pendaftaran.user.dataUmat.linkungan')->label('Lingkungan')->searchable(),
-            Column::name('pendaftaran.user.dataUmat.wilayah')->label('Wilayah')->searchable(),
-            Column::name('pendaftaran.jadwal.tanggal')->label('Jadwal')->searchable(),
+            Column::name('user.dataUmat.linkungan')->label('Lingkungan')->searchable(),
+            Column::name('user.dataUmat.wilayah')->label('Wilayah')->searchable(),
+            Column::name('jadwal.tanggal')->label('Jadwal')->searchable(),
+            // Column::callback(['id'], function ($id) {
+            //     return view('livewire.components.action-button', [
+            //         'id' => $id,
+            //         'segment' => request()->segment(1)
+            //     ]);
+            // })->label(__('Aksi')),
 
             // Column::callback(['id'], function ($id) {
             //     return view('livewire.components.action-button', [
@@ -45,6 +56,13 @@ class DataAbsenTable extends LivewireDatatable
             //     ]);
             // })->label(__('Aksi')),
         ];
+    }
+
+    public function getUserProperty()
+    {
+        $user = User::all();
+
+        return $user;
     }
 
     public function getDataById($id)

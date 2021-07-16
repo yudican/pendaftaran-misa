@@ -28,11 +28,15 @@
                             <td>{{$pendaftaran->jadwal->tanggal->isoFormat('dddd, D MMMM Y')}}</td>
                             <td>{{$pendaftaran->jadwal->waktu}}</td>
                             <td>
-                                @if ($pendaftaran->status == 1)
+                                @if ($pendaftaran->user->id == auth()->user()->id)
+                                @if ($pendaftaran->status == 2)
+                                <button class="btn btn-danger btn-sm">Dibatalkan</button>
+                                @else
                                 <button class="btn btn-primary btn-sm"
                                     wire:click="getId('{{$pendaftaran->id}}')">Batal</button>
+                                @endif
                                 @else
-                                <button class="btn btn-danger btn-sm">Dibatalkan</button>
+                                <button class="btn btn-primary btn-sm" disabled>Batal</button>
                                 @endif
 
                             </td>

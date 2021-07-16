@@ -8,11 +8,10 @@ use Livewire\Component;
 
 class StatusKesehatan extends Component
 {
-    
+
     public $status_kesehatan_id;
     public $status_kesehatan;
-    
-   
+    public $status;
 
     public $form_active = false;
     public $form = false;
@@ -31,8 +30,11 @@ class StatusKesehatan extends Component
     public function store()
     {
         $this->_validate();
-        
-        $data = ['status_kesehatan'  => $this->status_kesehatan];
+
+        $data = [
+            'status_kesehatan'  => $this->status_kesehatan,
+            'status'  => $this->status,
+        ];
 
         ModelsStatusKesehatan::create($data);
 
@@ -44,10 +46,13 @@ class StatusKesehatan extends Component
     {
         $this->_validate();
 
-        $data = ['status_kesehatan'  => $this->status_kesehatan];
+        $data = [
+            'status_kesehatan'  => $this->status_kesehatan,
+            'status'  => $this->status,
+        ];
         $row = ModelsStatusKesehatan::find($this->status_kesehatan_id);
 
-        
+
 
         $row->update($data);
 
@@ -77,6 +82,7 @@ class StatusKesehatan extends Component
         $status_kesehatan = ModelsStatusKesehatan::find($status_kesehatan_id);
         $this->status_kesehatan_id = $status_kesehatan->id;
         $this->status_kesehatan = $status_kesehatan->status_kesehatan;
+        $this->status = $status_kesehatan->status;
         if ($this->form) {
             $this->form_active = true;
             $this->emit('loadForm');
@@ -110,6 +116,7 @@ class StatusKesehatan extends Component
         $this->emit('refreshTable');
         $this->status_kesehatan_id = null;
         $this->status_kesehatan = null;
+        $this->status = null;
         $this->form = false;
         $this->form_active = false;
         $this->update_mode = false;

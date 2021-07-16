@@ -56,7 +56,7 @@ class Pendaftaran extends Model
      */
     public function dataUmat()
     {
-        return $this->belongsTo(DataUmat::class, 'parent_id', 'id');
+        return $this->belongsTo(DataUmat::class, 'user_id', 'id');
     }
 
     /**

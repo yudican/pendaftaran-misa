@@ -22,7 +22,6 @@ class HomePage extends Component
 
     public function cekUmat($result)
     {
-
         $pendaftaran = Pendaftaran::find($result);
         if (!$pendaftaran) {
             return $this->emit('showAlertError', ['msg' => 'Kamu Tidak Berhak mengikuti karena tidak terdaftar', 'status' => false]);
@@ -33,6 +32,7 @@ class HomePage extends Component
                 'pendaftaran_id' => $result,
                 'user_id' => $pendaftaran->user_id,
             ]);
+            $pendaftaran->update(['status' => '1']);
             $this->emit('showAlert', ['msg' => 'Selamat Kamu Boleh Mengikuti Misa', 'status' => false]);
         }
         $this->result = $result;

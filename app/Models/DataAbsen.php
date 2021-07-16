@@ -45,8 +45,8 @@ class DataAbsen extends Model
 
     public function getWilayahAttribute()
     {
-        if ($this->pendaftaran->dataUmat) {
-            return $this->pendaftaran->dataUmat->wilayah;
+        if ($this->pendaftaran->user->dataUmat) {
+            return $this->pendaftaran->user->dataUmat->wilayah;
         }
         return null;
     }

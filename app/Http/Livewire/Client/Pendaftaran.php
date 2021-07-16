@@ -9,6 +9,7 @@ use App\Models\StatusKesehatan;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 
@@ -20,9 +21,10 @@ class Pendaftaran extends Component
     public $jadwal_id;
     public $jumlah_anggota;
     public $tab = 1;
-    public $nama = [];
-    public $tanggal_lahir = [];
+    public $kuota = 0;
+    public $username = [];
     public $status_kesehatan = [];
+    public $data_umat = [];
     public $jadwal;
 
 
@@ -40,7 +42,7 @@ class Pendaftaran extends Component
             'items' => ModelsPendaftaran::all(),
             'jadwals' => Jadwal::whereDate('tanggal', '>=', date('Y-m-d'))->get(),
             'kesehatans' => StatusKesehatan::all(),
-            'pendaftarans' => ModelsPendaftaran::where(['parent_id'  => auth()->user()->dataUmat->id])->get()
+            'pendaftarans' => ModelsPendaftaran::where(['jadwal_id'  => $this->jadwal_id])->get()
         ])->layout('layouts.user');
     }
 
@@ -54,11 +56,34 @@ class Pendaftaran extends Component
         }
 
         if ($tab == 3 && $validate) {
-            $validate = $this->validate([
-                'nama.*' => 'required',
-                'tanggal_lahir.*' => 'required',
-                'status_kesehatan.*' => 'required',
-            ]);
+            for ($i = 0; $i < $this->jumlah_anggota; $i++) {
+                $this->validate([
+                    'username.' . $i => 'required',
+                    'status_kesehatan.' . $i => 'required',
+                ]);
+            }
+
+            foreach ($this->username as $key => $value) {
+                $user = User::where('username', $this->username[$key])->first();
+                $pendaftaran = ModelsPendaftaran::where(['user_id' => $user->id, 'jadwal_id' => $this->jadwal_id])->first();
+                if (!$user) {
+                    $this->emit('showAlertError', ['msg' => 'Username ' . $this->username[$key] . ' Tidak Terdaftar']);
+                    unset($this->username[$key]);
+
+                    return 0;
+                }
+
+
+                if ($pendaftaran) {
+                    $this->emit('showAlertError', ['msg' => 'Username ' . $this->username[$key] . ' Sudah Terdaftar']);
+                    unset($this->username[$key]);
+                    unset($this->status_kesehatan[$key]);
+
+                    return 0;
+                }
+
+                $this->data_umat[] = $user->dataUmat;
+            }
 
             $jadwal = Jadwal::find($this->jadwal_id);
             $this->jadwal = $jadwal->tanggal->isoFormat('dddd, D MMMM Y');
@@ -70,33 +95,15 @@ class Pendaftaran extends Component
 
     public function confirm()
     {
-        $validate = $this->validate([
-            'nama.*' => 'required',
-            'tanggal_lahir.*' => 'required',
-            'status_kesehatan.*' => 'required',
-        ]);
 
-        foreach ($this->nama as $key => $value) {
-            $namadepan = explode(' ', $this->nama[$key]) ? explode(' ', $this->nama[$key])[0] : $this->nama[$key];
-            $password = date('dmY', strtotime($this->tanggal_lahir[$key]));
-            $user = User::create([
-                'name'  => $this->nama[$key],
-                'username'  => strtolower($namadepan) . $password,
-                'password'  => Hash::make($password),
-                'parent_id'  => auth()->user()->id,
-            ]);
+        foreach ($this->username as $key => $value) {
+            $user = User::where('username', $this->username[$key])->first();
 
-            $team = Team::find(1);
-            $team->users()->attach($user, ['role' => 'keluarga']);
-
-            $role = Role::where('role_type', 'keluarga')->first();
-            $user->roles()->attach($role);
-            ModelsPendaftaran::create(
+            ModelsPendaftaran::updateOrCreate(
                 [
                     'jadwal_id' => $this->jadwal_id,
                     'user_id' => $user->id,
-                    'status_kesehatan_id' => $this->status_kesehatan[$key],
-                    'parent_id'  => auth()->user()->dataUmat->id,
+                    'status_kesehatan_id' => explode('.', $this->status_kesehatan[$key])[0],
                 ]
             );
         }
@@ -106,6 +113,22 @@ class Pendaftaran extends Component
         $this->emit('showAlert', ['msg' => 'Pendaftaran Berhasil']);
     }
 
+    public function cekPendaftaran($jadwal_id)
+    {
+        $jadwal = Jadwal::find($jadwal_id);
+        $this->kuota = $jadwal->kuota_tersedia - $jadwal->pendaftarans->count();
+    }
+
+    public function cekStatus($status_kesehatan_id)
+    {
+        $status = explode('.', $status_kesehatan_id);
+        $kesehatan = StatusKesehatan::find($status[0]);
+        if ($kesehatan->status < 1) {
+            $this->emit('showAlertError', ['msg' => 'Anda tidak diizinkan untuk mengikuti MISA']);
+            unset($this->status_kesehatan[$status[1]]);
+        }
+    }
+
     public function _reset()
     {
         $this->emit('closeModal');
@@ -113,9 +136,8 @@ class Pendaftaran extends Component
         $this->status = null;
         $this->status_kesehatan = null;
         $this->jumlah_anggota = null;
-        $this->jadwal_id = null;
-        $this->nama = [];
-        $this->tanggal_lahir = [];
+        $this->username = [];
+        $this->kuota = 0;
         $this->status_kesehatan = [];
         $this->jadwal = null;
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PrintMultipleQrCode;
+use App\Http\Livewire\Admin\CatatanKehadiran;
 use App\Http\Livewire\Admin\DataAbsen;
 use App\Http\Livewire\Admin\DataUmat;
 use App\Http\Livewire\Admin\Jadwal;
@@ -53,11 +54,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.authorization']
     Route::get('/data-umat', DataUmat::class)->name('data.umat');
     Route::get('/status-kesehatan', StatusKesehatan::class)->name('status.kesehatan');
     Route::get('/data-absen', DataAbsen::class)->name('data.absen');
+    Route::get('/catatan-kehadiran', CatatanKehadiran::class)->name('catatan.kehadiran');
 
     // client
     Route::get('/home', HomePage::class)->name('client.home');
     Route::get('/pendaftaran', Pendaftaran::class)->name('pendaftaran');
     Route::get('/cek-pendaftaran', CekPendaftaran::class)->name('cek.pendaftaran');
     Route::get('/riwayat-pendaftaran', RiwayatPendaftaran::class)->name('riwayat.pendaftaran');
-    Route::get('/data-barcode', [PrintMultipleQrCode::class, 'cetak_barcode'])->name('cetak_barcode');
+    Route::get('/data-barcode/{jadwal_id}', [PrintMultipleQrCode::class, 'cetak_barcode'])->name('cetak_barcode');
 });

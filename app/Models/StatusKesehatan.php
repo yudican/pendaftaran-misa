@@ -15,7 +15,7 @@ class StatusKesehatan extends Model
 
     protected $table = 'status_kesehatan';
 
-    protected $fillable = ['status_kesehatan'];
+    protected $fillable = ['status_kesehatan', 'status'];
 
     protected $dates = [];
 

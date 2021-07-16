@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\DataAbsen as ModelsDataAbsen;
+use App\Models\Jadwal;
 use Livewire\Component;
 
 
@@ -11,6 +12,7 @@ class DataAbsen extends Component
 
     public $absen_umat_id;
     public $pendaftaran_id;
+    public $jadwal_id;
 
 
 
@@ -24,7 +26,8 @@ class DataAbsen extends Component
     public function render()
     {
         return view('livewire.admin.absen-umat', [
-            'items' => ModelsDataAbsen::all()
+            'items' => ModelsDataAbsen::all(),
+            'jadwals' => Jadwal::all()
         ]);
     }
 
@@ -70,6 +73,11 @@ class DataAbsen extends Component
         ];
 
         return $this->validate($rule);
+    }
+
+    public function filterData($value)
+    {
+        $this->emit('setFilter', ['jadwal_id' => $value]);
     }
 
     public function getDataById($absen_umat_id)

@@ -174,6 +174,14 @@
                             </a>
                         </li>
                         @endif
+                        @if (auth()->user()->hasTeamPermission($curteam, 'catatan-kehadiran:read'))
+                        <li class="nav-item {{request()->routeIs('catatan.kehadiran') ? 'active' : ''}}">
+                            <a href="{{route('catatan.kehadiran')}}">
+                                <i class="fas fa-list"></i>
+                                <p>Catatan Kehadiran</p>
+                            </a>
+                        </li>
+                        @endif
                         @if (auth()->user()->hasTeamPermission($curteam, 'user:read'))
                         <li class="nav-item {{request()->routeIs('user') ? 'active' : ''}}">
                             <a href="{{route('user')}}">

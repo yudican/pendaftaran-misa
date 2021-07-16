@@ -26,6 +26,7 @@ class StatusKesehatanTable extends LivewireDatatable
         $this->hide = HideableColumn::where(['table_name' => $this->table_name, 'user_id' => auth()->user()->id])->pluck('column_name')->toArray();
         return [
             Column::name('status_kesehatan')->label('Status kesehatan')->searchable(),
+            BooleanColumn::name('status')->label('Status Daftar')->searchable(),
 
             Column::callback(['id'], function ($id) {
                 return view('livewire.components.action-button', [

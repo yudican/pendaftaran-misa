@@ -16,6 +16,7 @@ class CreateStatusKesehatansTable extends Migration
         Schema::create('status_kesehatan', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('status_kesehatan', 191);
+            $table->char('status', 1)->default(1);
             $table->timestamps();
         });
     }

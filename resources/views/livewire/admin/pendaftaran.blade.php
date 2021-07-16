@@ -24,10 +24,11 @@
                     <h3 class="header-title">Pilih Jadwal Misa</h3>
                 </div>
                 <div class="card-body">
-                    <x-select name="jadwal_id" label="Jadwal Misa (Bila tidak terdapat pilihan maka kuota telah habis)">
+                    <x-select name="jadwal_id" change="true"
+                        label="Jadwal Misa (Bila tidak terdapat pilihan maka kuota telah habis)">
                         <option value="">Pilih Jadwal</option>
                         @foreach ($jadwals as $jadwal)
-                        @if ($jadwal->pendaftarans->where('status', 1)->count() >= $jadwal->kuota_tersedia)
+                        @if ($jadwal->pendaftarans->count() >= $jadwal->kuota_tersedia)
                         <option value="" disabled>{{$jadwal->tanggal->isoFormat('dddd, D MMMM Y')}} -
                             {{$jadwal->waktu}}</option>
                         @else
@@ -39,7 +40,7 @@
                     </x-select>
                     <x-select name="jumlah_anggota" label="Jumlah Anggota">
                         <option value="">Pilih Jumlah</option>
-                        @for ($i = 0; $i < 10; $i++) <option value="{{$i+1}}">{{$i+1}} Orang</option>
+                        @for ($i = 0; $i < $kuota; $i++) <option value="{{$i+1}}">{{$i+1}} Orang</option>
                             @endfor
 
                     </x-select>
@@ -60,12 +61,12 @@
                 <div class="card-body">
                     @for ($i = 0; $i
                     < $jumlah_anggota; $i++) <div class="card">
-                        <x-text-field type="text" name="nama.{{$i}}" label="Nama Umat" />
-                        <x-text-field type="date" name="tanggal_lahir.{{$i}}" label="Tanggal Lahir Umat" />
-                        <x-select name="status_kesehatan.{{$i}}" label="Status Kesehatan">
+                        <x-text-field type="text" name="username.{{$i}}" label="Username" />
+                        <x-select change="true" component="cekStatus" name="status_kesehatan.{{$i}}"
+                            label="Status Kesehatan">
                             <option value="">Pilih Status Kesehatan</option>
                             @foreach ($kesehatans as $kesehatan)
-                            <option value="{{$kesehatan->id}}">{{$kesehatan->status_kesehatan}}</option>
+                            <option value="{{$kesehatan->id}}.{{$i}}">{{$kesehatan->status_kesehatan}}</option>
                             @endforeach
                         </x-select>
                 </div>
@@ -94,10 +95,10 @@
                             Jumlah Orang
                             <span>{{$jumlah_anggota}}</span>
                         </li>
-                        @foreach ($nama as $key => $item)
+                        @foreach ($data_umat as $key => $item)
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Nama Umat {{$key+1}}
-                            <span>{{$nama[$key]}}</span>
+                            <span>{{$item->nama_lengkap}}</span>
                         </li>
                         @endforeach
 
@@ -142,7 +143,8 @@
                         </tbody>
                     </table>
                     <div class="form-group">
-                        <a href="{{route('cetak_barcode')}}" target="_blank" class="btn btn-primary btn-sm">Cetak</a>
+                        <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id])}}" target="_blank"
+                            class="btn btn-primary btn-sm">Cetak</a>
                         <a href="{{route('client.home')}}" class="btn btn-success btn-sm">Kembali
                             Halaman Utama</a>
                     </div>
