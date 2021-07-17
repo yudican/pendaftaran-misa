@@ -40,6 +40,10 @@
                         </tr>
                         @endforeach
                     </table>
+                    <div class="form-group">
+                        <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id])}}" target="_blank"
+                            class="btn btn-primary btn-sm">Cetak</a>
+                    </div>
                 </div>
             </div>
         </div>

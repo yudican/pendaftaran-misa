@@ -24,9 +24,9 @@ class DataPendaftaranTable extends LivewireDatatable
     {
         $jadwal_id = count($this->filters) > 0 ? $this->filters['jadwal_id'] : null;
         if ($jadwal_id) {
-            return Pendaftaran::query()->where('jadwal_id', $jadwal_id);
+            return Pendaftaran::query()->where('jadwal_id', $jadwal_id)->where('status', '!=', 2);
         } else {
-            return Pendaftaran::query();
+            return Pendaftaran::query()->where('status', '!=', 2);
         }
     }
 

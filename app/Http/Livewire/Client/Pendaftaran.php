@@ -27,8 +27,6 @@ class Pendaftaran extends Component
     public $data_umat = [];
     public $jadwal;
 
-
-
     public $form_active = false;
     public $form = false;
     public $update_mode = false;
@@ -138,7 +136,7 @@ class Pendaftaran extends Component
         $this->jumlah_anggota = null;
         $this->username = [];
         $this->kuota = 0;
-        $this->status_kesehatan = [];
+        // $this->status_kesehatan = [];
         $this->jadwal = null;
     }
 }

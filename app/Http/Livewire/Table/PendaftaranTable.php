@@ -18,7 +18,7 @@ class PendaftaranTable extends LivewireDatatable
 
     public function builder()
     {
-        return Pendaftaran::query();
+        return Pendaftaran::query()->where('status', '!=', 2);
     }
 
     public function columns()
