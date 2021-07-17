@@ -234,7 +234,7 @@
                             icon: 'success',
                             title: 'Success',
                             text: data.msg,
-                            timer: 2000,
+                            timer: 5000,
                             showCancelButton: false,
                             showConfirmButton: false
                         })
@@ -245,7 +245,7 @@
                             icon: 'error',
                             title: 'Error',
                             text: data.msg,
-                            timer: 2000,
+                            timer: 5000,
                             showCancelButton: false,
                             showConfirmButton: false
                         })
