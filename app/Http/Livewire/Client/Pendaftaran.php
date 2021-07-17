@@ -39,7 +39,7 @@ class Pendaftaran extends Component
     {
         return view('livewire.client.pendaftaran', [
             'items' => ModelsPendaftaran::all(),
-            'jadwals' => Jadwal::whereDate('tanggal', '>=', date('Y-m-d'))->get(),
+            'jadwals' => Jadwal::whereDate('tanggal', '>=', date('Y-m-d'))->orderBy('tanggal', 'ASC')->get(),
             'kesehatans' => StatusKesehatan::all(),
         ])->layout('layouts.user');
     }

@@ -21,12 +21,15 @@ class CatatanKehadiranTable extends LivewireDatatable
 
     public function builder()
     {
-        // $absen =  DataAbsen::whereDoesntHave('pendaftaran', function ($query) {
-        //     return $query->where('status', '1');
-        // });
-        // dd($absen->get());
-        // $absen = Pendaftaran::with(['user', 'user.dataUmat', 'jadwal'])->whereDoesntHave('dataAbsens');
-        // dd($absen->get());
+        if (count($this->filters) > 0) {
+            $tanggal_mulai = $this->filters['tanggal_mulai'];
+            $tanggal_selesai = $this->filters['tanggal_selesai'];
+            return Pendaftaran::whereHas('jadwal', function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                return $query->whereBetween('tanggal', [$tanggal_mulai, $tanggal_selesai]);
+            })->whereDoesntHave('dataAbsens', function ($q) {
+                return $q->has('pendaftaran', '>=', 3);
+            })->where('status', '0');
+        }
         return Pendaftaran::whereHas('jadwal', function ($query) {
             return $query->whereDate('tanggal', '<=', date('Y-m-d'));
         })->whereDoesntHave('dataAbsens', function ($q) {
