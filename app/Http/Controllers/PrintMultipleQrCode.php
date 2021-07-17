@@ -8,9 +8,14 @@ use PDF;
 
 class PrintMultipleQrCode extends Controller
 {
-    public function cetak_barcode($jadwal_id)
+    public function cetak_barcode($jadwal_id, $limit = 0)
     {
-        $pendaftaran = Pendaftaran::where(['jadwal_id'  => $jadwal_id])->get();
+        $pendaftaran = null;
+        if ($limit > 0) {
+            $pendaftaran = Pendaftaran::where(['jadwal_id'  => $jadwal_id])->limit($limit)->orderBy('created_at', 'DESC')->get();
+        } else {
+            $pendaftaran = Pendaftaran::where(['jadwal_id'  => $jadwal_id])->get();
+        }
 
         $pdf = PDF::loadview('laporan.multi-barcode', ['pendaftarans' => $pendaftaran]);
         return $pdf->stream('barcode.pdf');

@@ -40,10 +40,12 @@
                         </tr>
                         @endforeach
                     </table>
+                    @if ($jadwal_id)
                     <div class="form-group">
-                        <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id])}}" target="_blank"
+                        <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id, 'limit' => 0])}}" target="_blank"
                             class="btn btn-primary btn-sm">Cetak</a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

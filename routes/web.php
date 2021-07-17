@@ -63,5 +63,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.authorization']
     Route::get('/pendaftaran', Pendaftaran::class)->name('pendaftaran');
     Route::get('/cek-pendaftaran', CekPendaftaran::class)->name('cek.pendaftaran');
     Route::get('/riwayat-pendaftaran', RiwayatPendaftaran::class)->name('riwayat.pendaftaran');
-    Route::get('/data-barcode/{jadwal_id}', [PrintMultipleQrCode::class, 'cetak_barcode'])->name('cetak_barcode');
+    Route::get('/data-barcode/{jadwal_id}/{limit}', [PrintMultipleQrCode::class, 'cetak_barcode'])->name('cetak_barcode');
 });

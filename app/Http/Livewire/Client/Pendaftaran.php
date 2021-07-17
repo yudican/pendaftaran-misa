@@ -25,6 +25,7 @@ class Pendaftaran extends Component
     public $username = [];
     public $status_kesehatan = [];
     public $data_umat = [];
+    public $pendaftarans = [];
     public $jadwal;
 
     public $form_active = false;
@@ -40,7 +41,6 @@ class Pendaftaran extends Component
             'items' => ModelsPendaftaran::all(),
             'jadwals' => Jadwal::whereDate('tanggal', '>=', date('Y-m-d'))->get(),
             'kesehatans' => StatusKesehatan::all(),
-            'pendaftarans' => ModelsPendaftaran::where(['jadwal_id'  => $this->jadwal_id])->get()
         ])->layout('layouts.user');
     }
 
@@ -97,13 +97,15 @@ class Pendaftaran extends Component
         foreach ($this->username as $key => $value) {
             $user = User::where('username', $this->username[$key])->first();
 
-            ModelsPendaftaran::updateOrCreate(
+            $pendaftaran = ModelsPendaftaran::create(
                 [
                     'jadwal_id' => $this->jadwal_id,
                     'user_id' => $user->id,
                     'status_kesehatan_id' => explode('.', $this->status_kesehatan[$key])[0],
                 ]
             );
+
+            $this->pendaftarans[] = $pendaftaran;
         }
 
         $this->tab = 4;

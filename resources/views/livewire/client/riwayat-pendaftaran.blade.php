@@ -28,6 +28,8 @@
                             <td>{{$pendaftaran->jadwal->tanggal->isoFormat('dddd, D MMMM Y')}}</td>
                             <td>{{$pendaftaran->jadwal->waktu}}</td>
                             <td>
+                                <a href="{{route('cetak_barcode', ['jadwal_id' => $pendaftaran->jadwal->id, 'limit' => 1])}}"
+                                    target="_blank" class="btn btn-success btn-sm">Cetak</a>
                                 @if ($pendaftaran->user->id == auth()->user()->id)
                                 @if ($pendaftaran->status == 2)
                                 <button class="btn btn-danger btn-sm">Dibatalkan</button>

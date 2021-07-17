@@ -24,8 +24,10 @@
           <h3 class="header-title">Pilih Jadwal Misa</h3>
         </div>
         <div class="card-body">
-          <x-select name="jadwal_id" change="true"
-            label="Jadwal Misa (Bila tidak terdapat pilihan maka kuota telah habis)">
+          <div class="alert alert-warning" role="alert">
+            Jadwal Misa (Bila tidak terdapat pilihan maka kuota telah habis)
+          </div>
+          <x-select name="jadwal_id" change="true" label="Pilih Jadwal">
             <option value="">Pilih Jadwal</option>
             @foreach ($jadwals as $jadwal)
             @if ($jadwal->pendaftarans->count() >= $jadwal->kuota_tersedia)
@@ -148,8 +150,8 @@
             </tbody>
           </table>
           <div class="form-group">
-            <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id])}}" target="_blank"
-              class="btn btn-primary btn-sm">Cetak</a>
+            <a href="{{route('cetak_barcode', ['jadwal_id' => $jadwal_id, 'limit' => count($pendaftarans)])}}"
+              target="_blank" class="btn btn-primary btn-sm">Cetak</a>
             <a href="{{route('client.home')}}" class="btn btn-success btn-sm">Kembali
               Halaman Utama</a>
           </div>
