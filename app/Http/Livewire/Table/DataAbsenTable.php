@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Table;
 
+use App\Exports\DataAbsenExport;
 use App\Models\HideableColumn;
 use App\Models\DataAbsen;
+use Maatwebsite\Excel\Facades\Excel;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -13,6 +15,7 @@ class DataAbsenTable extends LivewireDatatable
     protected $listeners = ['refreshTable', 'setFilter'];
     public $hideable = 'select';
     public $table_name = 'absen_umat';
+    public $exportable = true;
     public $filters = [];
     public $hide = [];
 
@@ -55,6 +58,12 @@ class DataAbsenTable extends LivewireDatatable
     public function getId($id)
     {
         $this->emit('getId', $id);
+    }
+
+    public function export()
+    {
+        $jadwal_id = count($this->filters) > 0 ? $this->filters['jadwal_id'] : null;
+        return Excel::download(new DataAbsenExport($jadwal_id), 'data-absen.xlsx');
     }
 
     public function refreshTable()
