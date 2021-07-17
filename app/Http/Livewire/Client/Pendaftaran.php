@@ -38,7 +38,7 @@ class Pendaftaran extends Component
 
     public function render()
     {
-        return view('livewire.admin.pendaftaran', [
+        return view('livewire.client.pendaftaran', [
             'items' => ModelsPendaftaran::all(),
             'jadwals' => Jadwal::whereDate('tanggal', '>=', date('Y-m-d'))->get(),
             'kesehatans' => StatusKesehatan::all(),

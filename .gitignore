@@ -1,5 +1,7 @@
 /node_modules
 /public/hot
+/resources/stubs
+/app/Http/Livewire/CrudGenerator.php
 /public/storage
 /storage/*.key
 /vendor

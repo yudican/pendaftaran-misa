@@ -182,62 +182,14 @@
                             </a>
                         </li>
                         @endif
-                        @if (auth()->user()->hasTeamPermission($curteam, 'user:read'))
-                        <li class="nav-item {{request()->routeIs('user') ? 'active' : ''}}">
-                            <a href="{{route('user')}}">
-                                <i class="fas fa-users"></i>
-                                <p>Manajemen User</p>
+                        @if (auth()->user()->hasTeamPermission($curteam, 'data-pendaftaran:read'))
+                        <li class="nav-item {{request()->routeIs('data.pendaftaran') ? 'active' : ''}}">
+                            <a href="{{route('data.pendaftaran')}}">
+                                <i class="fas fa-list"></i>
+                                <p>Riwayat Pendaftaran</p>
                             </a>
                         </li>
                         @endif
-
-                        {{-- @if (auth()->user()->hasTeamPermission($curteam, 'role:read') ||
-                        auth()->user()->hasTeamPermission($curteam, 'permission:read'))
-                        <li
-                            class="nav-item {{request()->routeIs('role') || request()->routeIs('permission') ? 'active' : ''}}">
-                        <a data-toggle="collapse" href="#role-permission" class="collapsed" aria-expanded="false">
-                            <i class="fas fa-key"></i>
-                            <p>Role & Permission</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="role-permission">
-                            <ul class="nav nav-collapse">
-                                @if (auth()->user()->hasTeamPermission($curteam, 'role:read'))
-                                <li class="{{request()->routeIs('role') ? 'active' : ''}}">
-                                    <a href="{{route('role')}}">
-                                        <span>Role</span>
-                                    </a>
-                                </li>
-                                @endif
-                                @if (auth()->user()->hasTeamPermission($curteam, 'permission:read'))
-                                <li class="{{request()->routeIs('permission') ? 'active' : ''}}">
-                                    <a href="{{route('permission')}}">
-                                        <span>Permission</span>
-                                    </a>
-                                </li>
-                                @endif
-                            </ul>
-                        </div>
-                        </li>
-                        @endif
-
-                        @if (auth()->user()->hasTeamPermission($curteam, 'crud-generator:read'))
-                        <li class="nav-item {{request()->routeIs('crud.generator') ? 'active' : ''}}">
-                            <a href="{{route('crud.generator')}}">
-                                <i class="fas fa-cogs"></i>
-                                <p>Crud Generator</p>
-                            </a>
-                        </li>
-                        @endif --}}
-
-
-                        {{-- <li class="nav-item {{request()->routeIs('attendance.report') ? 'active' : ''}}">
-                        <a href="{{route('attendance.report')}}">
-                            <i class="fas fa-cogs"></i>
-                            <p>Log Absensi</p>
-                        </a>
-                        </li> --}}
-
                     </ul>
                 </div>
             </div>
