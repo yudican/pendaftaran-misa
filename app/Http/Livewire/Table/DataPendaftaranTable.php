@@ -39,10 +39,11 @@ class DataPendaftaranTable extends LivewireDatatable
             Column::name('user.dataUmat.wilayah')->label('Wilayah')->searchable(),
             Column::name('user.dataUmat.telepon')->label('Telepon')->searchable(),
             Column::callback(['id', 'status', 'jadwal.tanggal', 'jadwal.waktu'], function ($id, $status, $tanggal, $waktu) {
+                $tgl = date('Y-m-d', strtotime($tanggal)) . ' ' . $waktu;
                 return view('livewire.components.button-status', [
                     'id' => $id,
                     'status' => $status,
-                    'jadwal' => strtotime(date('Y-m-d H:i:s')) >= strtotime(date('Y-m-d H:i:s', strtotime($tanggal . ' ' . $waktu)))
+                    'jadwal' => strtotime(date('Y-m-d H:i:s')) >= strtotime($tgl)
                 ]);
             })->label(__('Status')),
         ];
