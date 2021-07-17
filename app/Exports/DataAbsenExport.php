@@ -33,7 +33,7 @@ class DataAbsenExport implements FromQuery, WithHeadings, WithMapping
             $pendaftaran->user->dataUmat->linkungan,
             $pendaftaran->user->dataUmat->wilayah,
             $pendaftaran->user->dataUmat->telepon . '\'',
-            $pendaftaran->user->jadwal->tanggal,
+            $pendaftaran->jadwal->tanggal->isoFormat('dddd, D MMMM Y'),
         ];
     }
 

@@ -31,13 +31,13 @@ class DataPendaftaranExport implements FromQuery, WithHeadings, WithMapping
         $tanggal = date('Y-m-d', strtotime($pendaftaran->jadwal->tanggal)) . ' ' . $pendaftaran->jadwal->waktu;
         $status = 'Belum absen';
         if (strtotime(date('Y-m-d H:i:s')) >= strtotime($tanggal)) {
+            $status = 'Belum absen';
+        } else {
             if ($pendaftaran->status == 1) {
                 $status = 'Hadir';
             } else {
                 $status = 'Tidak Hadir';
             }
-        } else {
-            $status = 'Belum absen';
         }
         return [
             $pendaftaran->user->name,

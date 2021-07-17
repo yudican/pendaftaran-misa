@@ -40,8 +40,14 @@
           </x-select>
           <x-select name="jumlah_anggota" label="Jumlah Anggota">
             <option value="">Pilih Jumlah</option>
-            @for ($i = 0; $i < $kuota; $i++) <option value="{{$i+1}}">{{$i+1}} Orang</option>
+            @if ($kuota > 10)
+            @for ($in = 0; $in < 10; $in++) <option value="{{$in+1}}">{{$in+1}} Orang</option>
               @endfor
+              @else
+              @for ($i = 0; $i < $kuota; $i++) <option value="{{$i+1}}">{{$i+1}} Orang</option>
+                @endfor
+                @endif
+
 
           </x-select>
 
