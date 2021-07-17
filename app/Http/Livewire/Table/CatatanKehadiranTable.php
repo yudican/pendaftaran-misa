@@ -42,6 +42,7 @@ class CatatanKehadiranTable extends LivewireDatatable
             Column::name('user.dataUmat.linkungan')->label('Lingkungan')->searchable(),
             Column::name('user.dataUmat.wilayah')->label('Wilayah')->searchable(),
             Column::name('jadwal.tanggal')->label('Jadwal')->searchable(),
+            Column::name('user.dataUmat.telepon')->label('Telepon')->searchable(),
             // Column::callback(['id'], function ($id) {
             //     return view('livewire.components.action-button', [
             //         'id' => $id,
