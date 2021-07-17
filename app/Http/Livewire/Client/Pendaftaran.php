@@ -65,7 +65,7 @@ class Pendaftaran extends Component
 
             foreach ($this->username as $key => $value) {
                 $user = User::where('username', $this->username[$key])->first();
-                $pendaftaran = ModelsPendaftaran::where(['user_id' => $user->id, 'jadwal_id' => $this->jadwal_id])->first();
+
                 if (!$user) {
                     $this->emit('showAlertError', ['msg' => 'Username ' . $this->username[$key] . ' Tidak Terdaftar']);
                     unset($this->username[$key]);
@@ -73,7 +73,7 @@ class Pendaftaran extends Component
                     return 0;
                 }
 
-
+                $pendaftaran = ModelsPendaftaran::where(['user_id' => $user->id, 'jadwal_id' => $this->jadwal_id])->first();
                 if ($pendaftaran) {
                     $this->emit('showAlertError', ['msg' => 'Username ' . $this->username[$key] . ' Sudah Terdaftar']);
                     unset($this->username[$key]);

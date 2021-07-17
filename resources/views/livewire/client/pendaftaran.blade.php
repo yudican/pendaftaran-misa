@@ -101,14 +101,14 @@
             </li>
             @endforeach
 
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
               Lingkungan
               <span>{{auth()->user()->dataUmat->linkungan}}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Wilayah
               <span>{{auth()->user()->dataUmat->wilayah}}</span>
-            </li>
+            </li> --}}
           </ul>
           <div class="form-group">
             <button class="btn btn-primary btn-sm" wire:click.prevent="confirm">Konfirmasi Daftar</button>
