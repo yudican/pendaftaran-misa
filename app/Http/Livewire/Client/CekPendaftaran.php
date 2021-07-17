@@ -20,6 +20,6 @@ class CekPendaftaran extends Component
     public function cekPendaftaran($jadwal_id)
     {
         $this->jadwal_id = $jadwal_id;
-        $this->pendaftarans = Pendaftaran::where(['jadwal_id'  => $jadwal_id])->get();
+        $this->pendaftarans = Pendaftaran::where(['jadwal_id'  => $jadwal_id])->whereIn('status', ['0', '1'])->get();
     }
 }
