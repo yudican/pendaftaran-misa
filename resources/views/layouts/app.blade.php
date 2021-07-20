@@ -182,6 +182,14 @@
                             </a>
                         </li>
                         @endif
+                        @if (auth()->user()->hasTeamPermission($curteam, 'catatan-pembatalan:read'))
+                        <li class="nav-item {{request()->routeIs('catatan.pembatalan') ? 'active' : ''}}">
+                            <a href="{{route('catatan.pembatalan')}}">
+                                <i class="fas fa-times"></i>
+                                <p>Catatan Pembatalan</p>
+                            </a>
+                        </li>
+                        @endif
                         @if (auth()->user()->hasTeamPermission($curteam, 'data-pendaftaran:read'))
                         <li class="nav-item {{request()->routeIs('data.pendaftaran') ? 'active' : ''}}">
                             <a href="{{route('data.pendaftaran')}}">

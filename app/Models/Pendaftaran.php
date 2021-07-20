@@ -15,7 +15,7 @@ class Pendaftaran extends Model
 
     protected $table = 'pendaftaran';
 
-    protected $fillable = ['status', 'jadwal_id', 'user_id', 'status_kesehatan_id', 'parent_id'];
+    protected $fillable = ['status', 'alasan', 'jadwal_id', 'user_id', 'status_kesehatan_id', 'parent_id'];
 
     protected $dates = [];
 

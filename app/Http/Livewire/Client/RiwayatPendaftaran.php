@@ -8,6 +8,7 @@ use Livewire\Component;
 class RiwayatPendaftaran extends Component
 {
     public $pendaftaran_id;
+    public $alasan;
     public function render()
     {
         return view('livewire.client.riwayat-pendaftaran', [
@@ -29,13 +30,15 @@ class RiwayatPendaftaran extends Component
     {
         $this->emit('closeModal');
         $this->pendaftaran_id = null;
+        $this->alasan = null;
     }
 
 
     public function confirm()
     {
+        $this->validate(['alasan' => 'required']);
         $pendaftaran = Pendaftaran::find($this->pendaftaran_id);
-        $pendaftaran->update(['status' => '2']);
+        $pendaftaran->update(['status' => '2', 'alasan' => $this->alasan]);
 
         $this->emit('showAlert', ['msg' => 'Pendaftaran Berhasil Dibatalkan']);
         $this->_reset();

@@ -6,14 +6,14 @@
                 <div class="card-body">
                     <h4 class="card-title text-capitalize">
                         <a href="{{route('dashboard')}}">
-                            <span><i class="fas fa-arrow-left mr-3 text-capitalize"></i>Catatan Kehadiran</span>
+                            <span><i class="fas fa-arrow-left mr-3 text-capitalize"></i>Catatan Pembatalan</span>
                         </a>
                     </h4>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -23,25 +23,25 @@
                         </div>
                         <div class="col-md-4">
                             <x-text-field type="date" name="tanggal_selesai" min="{{$tanggal_mulai}}"
-                                label="Tanggal Akhir" />
-                        </div>
-                    </div>
-                    <div class="form-group mt-2">
-                        <button class="btn btn-primary btn-sm" wire:click="setFilter">Filter</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <livewire:table.catatan-kehadiran-table />
-        </div>
+        label="Tanggal Akhir" />
     </div>
-    @push('scripts')
+</div>
+<div class="form-group mt-2">
+    <button class="btn btn-primary btn-sm" wire:click="setFilter">Filter</button>
+</div>
+</div>
+</div>
+</div> --}}
+
+<div class="col-md-12">
+    <livewire:table.catatan-pembatalan-table />
+</div>
+</div>
+@push('scripts')
 
 
-    <script>
-        document.addEventListener('livewire:load', function(e) {
+<script>
+    document.addEventListener('livewire:load', function(e) {
             window.livewire.on('showModal', (data) => {
                 $('#form-modal').modal('show')
             });
@@ -51,6 +51,6 @@
                 $('#form-modal').modal('hide')
             });
         })
-    </script>
-    @endpush
+</script>
+@endpush
 </div>

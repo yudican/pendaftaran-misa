@@ -83,10 +83,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div class="col-md-12">
-            <livewire:table.jadwal-table />
-        </div> --}}
     </div>
     @push('scripts')
     {!! $chart1->renderChartJsLibrary() !!}

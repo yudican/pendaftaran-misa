@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PrintMultipleQrCode;
 use App\Http\Livewire\Admin\CatatanKehadiran;
+use App\Http\Livewire\Admin\CatatanPembatalan;
 use App\Http\Livewire\Admin\DataAbsen;
 use App\Http\Livewire\Admin\DataPendaftaran;
 use App\Http\Livewire\Admin\DataUmat;
@@ -56,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.authorization']
     Route::get('/status-kesehatan', StatusKesehatan::class)->name('status.kesehatan');
     Route::get('/data-absen', DataAbsen::class)->name('data.absen');
     Route::get('/catatan-kehadiran', CatatanKehadiran::class)->name('catatan.kehadiran');
+    Route::get('/catatan-pembatalan', CatatanPembatalan::class)->name('catatan.pembatalan');
     Route::get('/data-pendaftaran', DataPendaftaran::class)->name('data.pendaftaran');
 
     // client

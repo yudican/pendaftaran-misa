@@ -63,12 +63,12 @@
                     <h5 class="modal-title" id="my-modal-title">Konfirmasi Batal</h5>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah anda yakin ingin membatalkan pendaftaran.?</p>
+                    <x-text-field type="text" name="alasan" label="Alasan Pembatalan" />
                 </div>
                 <div class="modal-footer">
                     <button type="submit" wire:click='confirm' class="btn btn-danger btn-sm"><i
-                            class="fa fa-check pr-2"></i>Ya, Batal</button>
-                    <button class="btn btn-primary btn-sm" wire:click='_reset'><i class="fa fa-times pr-2"></i>Tutup</a>
+                            class="fa fa-check pr-2"></i>Kirim</button>
+                    <button class="btn btn-primary btn-sm" wire:click='_reset'><i class="fa fa-times pr-2"></i>Batal</a>
                 </div>
             </div>
         </div>
