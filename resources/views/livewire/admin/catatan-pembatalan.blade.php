@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        {{-- <div class="col-md-12">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -23,25 +23,25 @@
                         </div>
                         <div class="col-md-4">
                             <x-text-field type="date" name="tanggal_selesai" min="{{$tanggal_mulai}}"
-        label="Tanggal Akhir" />
+                                label="Tanggal Akhir" />
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <button class="btn btn-primary btn-sm" wire:click="setFilter">Filter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <livewire:table.catatan-pembatalan-table />
+        </div>
     </div>
-</div>
-<div class="form-group mt-2">
-    <button class="btn btn-primary btn-sm" wire:click="setFilter">Filter</button>
-</div>
-</div>
-</div>
-</div> --}}
-
-<div class="col-md-12">
-    <livewire:table.catatan-pembatalan-table />
-</div>
-</div>
-@push('scripts')
+    @push('scripts')
 
 
-<script>
-    document.addEventListener('livewire:load', function(e) {
+    <script>
+        document.addEventListener('livewire:load', function(e) {
             window.livewire.on('showModal', (data) => {
                 $('#form-modal').modal('show')
             });
@@ -51,6 +51,6 @@
                 $('#form-modal').modal('hide')
             });
         })
-</script>
-@endpush
+    </script>
+    @endpush
 </div>

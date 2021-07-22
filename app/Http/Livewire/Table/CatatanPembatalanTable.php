@@ -19,6 +19,15 @@ class CatatanPembatalanTable extends LivewireDatatable
 
     public function builder()
     {
+        if (count($this->filters)) {
+            $tanggal_mulai = $this->filters['tanggal_mulai'];
+            $tanggal_selesai = $this->filters['tanggal_selesai'];
+            if ($tanggal_mulai && $tanggal_selesai) {
+                return Pendaftaran::query()->whereHas('jadwal', function ($query) use ($tanggal_mulai, $tanggal_selesai) {
+                    return $query->whereBetween('tanggal', [$tanggal_mulai, $tanggal_selesai]);
+                })->where('status', '2');
+            }
+        }
         return Pendaftaran::query()->where('status', '2');
     }
 
